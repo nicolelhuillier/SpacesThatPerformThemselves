@@ -69,7 +69,7 @@ void setup()
     }
   }
 
-  Serial.print("\nMaster-");
+  Serial.print("Master-");
   if (UNIDENTIFIED == wallID) {
     Serial.println("UNKNOWN");
   } else {
