@@ -1,6 +1,6 @@
 import controlP5.*;
 import processing.serial.*;
-import java.util.List;
+import java.util.*;
 
 //DECLARE CLASS
 ControlP5 cp5;
@@ -120,6 +120,8 @@ int Motor86Speed = MOTOR_DEFAULT_SPEED;
 int Motor87Speed = MOTOR_DEFAULT_SPEED;
 int Motor88Speed = MOTOR_DEFAULT_SPEED;
 int Motor89Speed = MOTOR_DEFAULT_SPEED;
+
+ScrollableList[] portTxt;
 
 Textfield timelineTxt;
 Textfield timeTxt;
@@ -261,6 +263,18 @@ boolean initWallControllers() {
   int wallsFound = 0;
   final int TIMEOUT_MS = 4000;
   final int MAX_TRY = 10;
+
+  String[] wallPortNames = new String[NUM_WALLS];
+  
+  final String[] wallPortNamesFromFile = loadStrings("portsNames.txt");
+  
+  if (null!=wallPortNamesFromFile) {
+    Arrays.sort(portNames, new Comparator<String>() {
+      public int compare(String s1, String s2) {
+        if (Arrays.asList(wallPortNamesFromFile).contains(s1)) { return 1; } else { return -1; }
+      }
+    });
+  }
   
   for (int i = 0; wallsFound<(NUM_WALLS) && i<portNames.length; ++i) {
   
@@ -284,6 +298,7 @@ boolean initWallControllers() {
                 int wallNumInt =  Integer.parseInt(wallNum.trim());
                 serialPorts[wallNumInt] = testPort;
                 println("Identified wall #"+wallNumInt+" on port: "+portNames[i]);
+                wallPortNames[wallNumInt] = portNames[i];
                 found = true;
                 wallsFound++;
               } catch (RuntimeException e) {
@@ -305,19 +320,23 @@ boolean initWallControllers() {
     }
        
   }
+  
+  if (NUM_WALLS == wallsFound) {
+    saveStrings("portsNames.txt", wallPortNames);
+  }
 
   //serialPorts[0] = new Serial(this, portName1, 9600);
   //serialPorts[1] = new Serial(this, portName2, 9600);
   //serialPorts[2] = new Serial(this, portName3, 9600);
   //serialPorts[3] = new Serial(this, portName4, 9600);
   //serialPorts[4] = new Serial(this, portName5, 9600);
-  portsReady = true;
+  portsReady = true; //Elsewhere in the code (in the draw loop?) it relys on this 'portsReady' to be true only after the ports are open for proper functioning.
 
   return (NUM_WALLS == wallsFound);
 }
 
 void setup() {
-  size(1250, 700);
+  size(1500, 700);
   background(15);
   stroke(255);
   line(10, 215, 530, 215);
@@ -437,7 +456,27 @@ void setup() {
     .setPosition(10, 200)
     .setSize(50, 50);
  */
- 
+ portTxt = new ScrollableList[5];
+ portTxt[0] = cp5.addScrollableList("port1Txt")
+   .setPosition(1260,10)
+   .setSize(200,120);
+
+ portTxt[1] = cp5.addScrollableList("port2Txt")
+   .setPosition(1260,130)
+   .setSize(200,120);
+
+ portTxt[2] = cp5.addScrollableList("port3Txt")
+   .setPosition(1260,260)
+   .setSize(200,120);
+
+ portTxt[3] = cp5.addScrollableList("port4Txt")
+   .setPosition(1260,390)
+   .setSize(200,120);
+
+ portTxt[4] = cp5.addScrollableList("port5Txt")
+   .setPosition(1260,520)
+   .setSize(200,120);
+
  timelineTxt = cp5.addTextfield("timeline")
    .setPosition(650,550)
    .setSize(500,120);
@@ -547,9 +586,14 @@ void draw() {
       //todo: handle isPortReady logic
       
       print("Rcv"+i+": ");
+      String line = "";
       while (serialPorts[i].available() > 0) {
         int inByte = serialPorts[i].read();
         print(""+char(inByte));
+        line+=char(inByte);
+      }
+      if (!line.equals(".")) {
+      //  portTxt[i].addItem(line,null); //<-- disabled because ControlP5 seems to have bugs with handling of scrollable lists...
       }
       println();
     }
