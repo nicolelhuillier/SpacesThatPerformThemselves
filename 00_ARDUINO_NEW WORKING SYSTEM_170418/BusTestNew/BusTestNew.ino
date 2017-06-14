@@ -35,6 +35,9 @@ SoftwareWire myWire( A4, A5);
 char commandBuffer[64];
 int commandIndex = 0;
 
+int wallIdPins[] = {8,9,10,11,12}; //the pin numbers for identifying which wall this controller is for. These pins will be INPUT_PULLUP, and the appropriate one will be grounded. Tested on bootup 
+#define UNIDENTIFIED 99
+
 /**
  * 
  * This is a newer (April 2017) version of the bus controller for AmazingStepper.
@@ -51,8 +54,28 @@ int commandIndex = 0;
 
 void setup()
 {
+  pinMode(wallIdPins[0],INPUT_PULLUP);
+  pinMode(wallIdPins[1],INPUT_PULLUP);
+  pinMode(wallIdPins[2],INPUT_PULLUP);
+  pinMode(wallIdPins[3],INPUT_PULLUP);
+  pinMode(wallIdPins[4],INPUT_PULLUP);
+
   Serial.begin(9600);      // start serial port
-  Serial.println(("\nMaster"));
+
+  int wallID = UNIDENTIFIED;
+  for (int i = 0; i<(sizeof(wallIdPins)/sizeof(int)); ++i) {
+    if (LOW==digitalRead(wallIdPins[i])) {
+      wallID = i;
+    }
+  }
+
+  Serial.print("\nMaster-");
+  if (UNIDENTIFIED == wallID) {
+    Serial.println("UNKNOWN");
+  } else {
+    Serial.println(wallID);    
+  }
+  
 
   myWire.begin();          // join i2c bus as master
   myWire.setClock(5000);
