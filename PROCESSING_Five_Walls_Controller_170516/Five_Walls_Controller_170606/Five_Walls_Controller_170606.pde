@@ -336,7 +336,7 @@ boolean initWallControllers() {
 }
 
 void setup() {
-  size(1500, 700);
+  size(1550, 700);
   background(15);
   stroke(255);
   line(10, 215, 530, 215);
