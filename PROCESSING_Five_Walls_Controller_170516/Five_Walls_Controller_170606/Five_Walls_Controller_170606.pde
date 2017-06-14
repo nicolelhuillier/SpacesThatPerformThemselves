@@ -248,6 +248,74 @@ AmazingStepper as87;
 AmazingStepper as88;
 AmazingStepper as89;
 
+/**
+ * This function inits the serial ports, and returns true iff it found all five walls
+ */
+boolean initWallControllers() {
+  String portNames[] = Serial.list();
+  //  printArray(Serial.list());
+
+  serialPorts = new Serial[5];
+  
+  final int NUM_WALLS = 5;
+  int wallsFound = 0;
+  final int TIMEOUT_MS = 4000;
+  final int MAX_TRY = 10;
+  
+  for (int i = 0; wallsFound<(NUM_WALLS) && i<portNames.length; ++i) {
+  
+    try {
+      Serial testPort = new Serial(this, portNames[i], 9600);
+      testPort.bufferUntil('\n');
+      testPort.write('\r'); //BusTestNew sketch gracefully ignores carriage returns.
+      int tryCount = 0;
+      boolean found = false;
+      
+      while (!found && tryCount<MAX_TRY) {
+        if (testPort.available() > 0) {
+          String initStr = testPort.readStringUntil('\n');
+          if (initStr != null) {
+            println("Found init Str:" + initStr);
+            final String INIT_PREFIX = "Master-";
+            int position = initStr.indexOf(INIT_PREFIX);
+            if (-1!=position && position<(initStr.length() - INIT_PREFIX.length())) {
+              String wallNum = initStr.substring(position + INIT_PREFIX.length());
+              try {
+                int wallNumInt =  Integer.parseInt(wallNum.trim());
+                serialPorts[wallNumInt] = testPort;
+                println("Identified wall #"+wallNumInt+" on port: "+portNames[i]);
+                found = true;
+                wallsFound++;
+              } catch (RuntimeException e) {
+                println("Unable to extract wall ID: '"+wallNum+"'");
+              }
+            }
+          }
+        }
+        tryCount++;
+        delay(TIMEOUT_MS/MAX_TRY);
+      }
+      
+      if (MAX_TRY==tryCount) {
+        println("TIMEOUT!");
+      }
+    }
+    catch(RuntimeException e){
+      println("Inaccessible Port: "+portNames[i]);
+    }
+       
+  }
+
+  //serialPorts[0] = new Serial(this, portName1, 9600);
+  //serialPorts[1] = new Serial(this, portName2, 9600);
+  //serialPorts[2] = new Serial(this, portName3, 9600);
+  //serialPorts[3] = new Serial(this, portName4, 9600);
+  //serialPorts[4] = new Serial(this, portName5, 9600);
+  portsReady = true;
+
+  return (NUM_WALLS == wallsFound);
+}
+
 void setup() {
   size(1250, 700);
   background(15);
@@ -256,31 +324,8 @@ void setup() {
   line(650, 215, 1170, 215);
   line(10, 435, 530, 435);
   line(650, 435, 1170, 435);
-  printArray(Serial.list());
   
-  String portName1 = Serial.list()[1];
-  String portName2 = Serial.list()[2];
-  String portName3 = Serial.list()[3];
-  String portName4 = Serial.list()[4];
-  String portName5 = Serial.list()[5];
-
-  serialPorts = new Serial[5];
-  serialPorts[0] = new Serial(this, portName1, 9600);
-  serialPorts[1] = new Serial(this, portName2, 9600);
-  serialPorts[2] = new Serial(this, portName3, 9600);
-  serialPorts[3] = new Serial(this, portName4, 9600);
-  serialPorts[4] = new Serial(this, portName5, 9600);
-  //wait for all the ports to be ready (loose definition at the moment: port said anything (boot message), to be 'fixed' later with code that identifies particular walls by the message the arduino boots with)
-/*
-  for (int i=0; i<serialPorts.length; ++i) {
-    print("Waiting for serial port #"+i+" ... ");
-    while (serialPorts[i].available() == 0) {
-      //wait
-    }
-    println(" Ready!");
-  }
-  */
-  portsReady = true;
+  initWallControllers();
   
   //INITIALIZE
   cp5 = new ControlP5(this);
