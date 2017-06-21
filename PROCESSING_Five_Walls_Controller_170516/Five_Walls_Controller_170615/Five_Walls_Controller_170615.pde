@@ -302,6 +302,7 @@ boolean initWallControllers() {
       
       if (MAX_TRY==tryCount) {
         println("TIMEOUT!");
+        testPort.stop();
       }
     }
     catch(RuntimeException e){
