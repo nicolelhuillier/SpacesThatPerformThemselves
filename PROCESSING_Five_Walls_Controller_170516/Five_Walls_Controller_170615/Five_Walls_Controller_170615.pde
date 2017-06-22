@@ -10,7 +10,11 @@ ControlP5 cp5;
 MidiBus myBus; // The MidiBus  
 
 // LED port
-Serial portLED;
+Serial portLED_Wall1;
+Serial portLED_Wall2;
+//Serial portLED_Wall3;
+//Serial portLED_Wall4;
+//Serial portLED_Wall5;
 
 void setup() {
   size(1550, 700);
@@ -31,10 +35,12 @@ void setup() {
 
   // LED PORT
   //String portLEDName = Serial.list()[6]; // Nicole's computer 
-  String portLEDName = Serial.list()[10]; // Kevin's computer
-
-  println(portLEDName);
-  portLED = new Serial(this, portLEDName, 9600);
+ 
+  portLED_Wall1 = new Serial(this, Serial.list()[10], 9600);  // Kevin's computer
+  portLED_Wall2 = new Serial(this, Serial.list()[11], 9600);  // Kevin's computer
+  //portLED_Wall3 = new Serial(this, Serial.list()[12], 9600);  // Kevin's computer
+  //portLED_Wall4 = new Serial(this, Serial.list()[13], 9600);  // Kevin's computer
+  //portLED_Wall5 = new Serial(this, Serial.list()[14], 9600);  // Kevin's computer
 
   setupGUI();
 

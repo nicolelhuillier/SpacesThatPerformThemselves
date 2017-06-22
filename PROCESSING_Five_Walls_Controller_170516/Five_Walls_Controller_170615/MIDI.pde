@@ -9,15 +9,15 @@ void noteOn(int channel, int pitch, int velocity) {
   println("Pitch:"+pitch);
   println("Velocity:"+velocity);
 
-  if (pitch == 72) {
+  if (pitch == 80) {
     AmazingStepper.highAll();
   }
   
-  if (pitch == 73) {
+  if (pitch == 81) {
     AmazingStepper.lowAll();
   }
   
-  if (pitch == 71) {
+  if (pitch == 82) {
     AmazingStepper.sendMovement(17,127,250); // port, speed, pos
     AmazingStepper.sendMovement(33,127,250); // port, speed, pos
     AmazingStepper.sendMovement(49,127,250); // port, speed, pos
@@ -35,13 +35,36 @@ void noteOn(int channel, int pitch, int velocity) {
   sendToArduino = true;
 
   //secuencias de inicio, stop, 
-  if ( inChannel == 0) {
-    sendToLEDs = true;
+    
+    
+    
+   // Motors channel - Channel 2 on Abelton
+  if (inChannel == 0) {
+    sendToMotors = true;
+  }
+  
+  
+  // LED channel wall 1 - Channel 1 on Abelton
+  if ( inChannel == 1) {
+    sendToLEDs_Wall1 = true;
   }
 
-  //LEDs
-  if (inChannel == 1) {
-    sendToMotors = true;
+  // LED channel wall 2 - Channel 3 on Abelton
+  if (inChannel == 2) {
+    sendToLEDs_Wall2 = true;
+  }
+  
+    // LED channel wall 3 - Channel 4 on Abelton
+  if (inChannel == 3) {
+    sendToLEDs_Wall3 = true;
+  }
+      // LED channel wall 4 - Channel 5 on Abelton
+  if (inChannel == 4) {
+    sendToLEDs_Wall4 = true;
+  }
+      // LED channel wall 5 - Channel 6 on Abelton
+  if (inChannel == 5) {
+    sendToLEDs_Wall5 = true;
   }
   
 }

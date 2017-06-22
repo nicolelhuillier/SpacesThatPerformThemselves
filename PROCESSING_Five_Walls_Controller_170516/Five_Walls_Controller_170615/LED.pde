@@ -1,8 +1,13 @@
 boolean sendToStart = false;
 boolean sendToStop  = false;
-boolean sendToLEDs  = false;
+
 boolean sendToMotors = false;
 boolean sendToArduino = false;
+boolean sendToLEDs_Wall1  = false;
+boolean sendToLEDs_Wall2  = false;
+boolean sendToLEDs_Wall3  = false;
+boolean sendToLEDs_Wall4  = false;
+boolean sendToLEDs_Wall5  = false;
 
 int inChannel  = 0;
 int inPitch    = 0;
@@ -16,14 +21,46 @@ void sendToLED() {
 
   if (sendToArduino) {
 
-    if (sendToLEDs) {
+    if (sendToLEDs_Wall1) { // Wall 1
       // myPort.write(inVelocity);
       String sendStr = inPitch+"";
-      portLED.write(sendStr);
+      portLED_Wall1.write(sendStr);
 
       println("sent to LEDs: "+ sendStr);
-      sendToLEDs = false;
+      sendToLEDs_Wall1 = false;
+    } 
+    if (sendToLEDs_Wall2) { // Wall 2
+      // myPort.write(inVelocity);
+      String sendStr = inPitch+"";
+      portLED_Wall2.write(sendStr);
+
+      println("sent to LEDs: "+ sendStr);
+      sendToLEDs_Wall2 = false;
     }
+    // 
+    // if (sendToLEDs_Wall3) { // Wall 3
+    //  // myPort.write(inVelocity);
+    //  String sendStr = inPitch+"";
+    //  portLED_Wall3.write(sendStr);
+
+    //  println("sent to LEDs: "+ sendStr);
+    //  sendToLEDs_Wall3 = false;
+    //} 
+  //   if (sendToLEDs_Wall4) { // Wall 4
+    //  // myPort.write(inVelocity);
+    //  String sendStr = inPitch+"";
+    //  portLED_Wall4.write(sendStr);
+
+    //  println("sent to LEDs: "+ sendStr);
+    //  sendToLEDs_Wall4 = false;
+    //}  if (sendToLEDs_Wall5) { // Wall 5
+    //  // myPort.write(inVelocity);
+    //  String sendStr = inPitch+"";
+    //  portLED_Wall5.write(sendStr);
+
+    //  println("sent to LEDs: "+ sendStr);
+    //  sendToLEDs_Wall5 = false;
+    //}
 
     //if (sendToMotors) {
     //  String sendStr =  inPitch+"";

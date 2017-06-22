@@ -1,5 +1,5 @@
 /dev/cu.usbmodem14111
-/dev/cu.usbmodem11
+/dev/tty.usbmodem26
 /dev/cu.usbmodem141231
 /dev/cu.usbmodem141221
 /dev/cu.usbmodem141311
