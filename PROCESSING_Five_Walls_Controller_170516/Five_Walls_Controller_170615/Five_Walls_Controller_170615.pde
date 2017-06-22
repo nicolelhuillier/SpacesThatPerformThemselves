@@ -9,6 +9,8 @@ ControlP5 cp5;
 //clase MIDi
 MidiBus myBus; // The MidiBus  
 
+// LED port
+Serial portLED;
 
 void setup() {
   size(1550, 700);
@@ -24,7 +26,15 @@ void setup() {
   
   ///
   MidiBus.list(); // List all available Midi devices on STDOUT. This will show each device's index and name.    
-  myBus = new MidiBus(this, 0, 1); // Create a new MidiBus with no input device and the default Java Sound Synthesizer as the output device.
+  //myBus = new MidiBus(this, 0, 1); // Nicole's computer - Create a new MidiBus with no input device and the default Java Sound Synthesizer as the output device.
+  myBus = new MidiBus(this, 1, 2); // Kevin's computer - Create a new MidiBus with no input device and the default Java Sound Synthesizer as the output device.
+
+  // LED PORT
+  //String portLEDName = Serial.list()[6]; // Nicole's computer 
+  String portLEDName = Serial.list()[10]; // Kevin's computer
+
+  println(portLEDName);
+  portLED = new Serial(this, portLEDName, 9600);
 
   setupGUI();
 
@@ -51,6 +61,7 @@ void draw() {
   if (portsReady) { 
     if (!playEnabled) {
       Update();
+      sendToLED();
     }
   }
   

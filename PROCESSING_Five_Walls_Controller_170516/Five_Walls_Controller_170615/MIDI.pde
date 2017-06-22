@@ -25,6 +25,25 @@ void noteOn(int channel, int pitch, int velocity) {
     AmazingStepper.sendMovement(81,127,250); // port, speed, pos
   }
   
+  
+  // ===== LEDs =====
+  //guardar valores
+  inChannel  = channel;
+  inPitch    = pitch;
+  inVelocity = velocity;
+  
+  sendToArduino = true;
+
+  //secuencias de inicio, stop, 
+  if ( inChannel == 0) {
+    sendToLEDs = true;
+  }
+
+  //LEDs
+  if (inChannel == 1) {
+    sendToMotors = true;
+  }
+  
 }
 
 void noteOff(int channel, int pitch, int velocity) {
