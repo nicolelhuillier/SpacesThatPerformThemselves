@@ -32,6 +32,7 @@ boolean initWallControllers() {
   for (int i = 0; wallsFound<(NUM_WALLS) && i<portNames.length; ++i) {
   
     try {
+      println("testing " + portNames[i]);
       Serial testPort = new Serial(this, portNames[i], 9600);
       testPort.bufferUntil('\n');
       testPort.write('\r'); //BusTestNew sketch gracefully ignores carriage returns.
