@@ -33,11 +33,40 @@ int drawingMemory[ledsPerStrip * 8];
 
 OctoSK6812 leds(ledsPerStrip, displayMemory, drawingMemory, SK6812_GRBW);
 
+const int wallIdPins[] = { 0, 1, 23, 22, 19 }; //the pin numbers for identifying which wall this controller is for. These pins will be INPUT_PULLUP, and the appropriate one will be grounded. Tested on bootup 
+#define UNIDENTIFIED 99
+int wallID = UNIDENTIFIED;
+
+void printWallID() {
+  Serial.print("LED-");
+  if (UNIDENTIFIED == wallID) {
+    Serial.println("UNKNOWN");
+  } else {
+    Serial.println(wallID);    
+  }
+  
+}
+
 void setup() {
 
   Serial.begin(9600); //mas rapido? 115200?
   Serial.setTimeout(50);
 
+  /********** BEGIN - wall ID *********/
+  //NOTICE: the message on boot might not be received on the PC side due to whatever reason... so we made it also reply when '1' is sent on serial.
+  for (int i=0; i < (sizeof(wallIdPins)/sizeof(int)); ++i) {
+      pinMode(wallIdPins[i],INPUT_PULLUP);
+  }
+
+  for (int i = 0; i<(sizeof(wallIdPins)/sizeof(int)); ++i) {
+    if (LOW==digitalRead(wallIdPins[i])) {
+       wallID = i;
+    }
+  }
+
+  printWallID();
+ /********** END - wall ID *********/
+ 
   leds.begin();
   leds.show();
 
@@ -70,6 +99,10 @@ void loop() {
   if (Serial.available() > 0) {
     // get incoming byte:
     inInt = Serial.parseInt();
+  }
+
+  if (1 == inInt) {
+    printWallID();
   }
 
   if (inInt == 70) {
