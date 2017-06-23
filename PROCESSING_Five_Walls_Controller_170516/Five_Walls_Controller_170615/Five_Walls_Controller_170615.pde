@@ -40,14 +40,14 @@ void setup() {
   // LED PORT
   //String portLEDName = Serial.list()[6]; // Nicole's computer 
  
-  portLED_Wall1 = new Serial(this, Serial.list()[11], 9600);  // Kevin's computer
-  portLED_Wall2 = new Serial(this, Serial.list()[12], 9600);  // Kevin's computer
-  portLED_Wall3 = new Serial(this, Serial.list()[13], 9600);  // Kevin's computer
-  portLED_Wall4 = new Serial(this, Serial.list()[14], 9600);  // Kevin's computer
-  portLED_Wall5 = new Serial(this, Serial.list()[15], 9600);  // Kevin's computer
+  portLED_Wall1 = new Serial(this, Serial.list()[10], 9600);  // Kevin's computer
+  portLED_Wall2 = new Serial(this, Serial.list()[11], 9600);  // Kevin's computer
+  portLED_Wall3 = new Serial(this, Serial.list()[12], 9600);  // Kevin's computer
+  portLED_Wall4 = new Serial(this, Serial.list()[13], 9600);  // Kevin's computer
+  portLED_Wall5 = new Serial(this, Serial.list()[14], 9600);  // Kevin's computer
 
   // CapacitiveTouch port
-  portCapacitive = new Serial(this, Serial.list()[10], 9600);
+  portCapacitive = new Serial(this, Serial.list()[9], 9600);
   
   
   setupGUI();
