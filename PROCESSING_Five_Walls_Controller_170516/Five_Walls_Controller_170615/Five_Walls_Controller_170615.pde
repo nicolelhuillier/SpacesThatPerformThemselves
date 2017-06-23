@@ -12,9 +12,13 @@ MidiBus myBus; // The MidiBus
 // LED port
 Serial portLED_Wall1;
 Serial portLED_Wall2;
-//Serial portLED_Wall3;
-//Serial portLED_Wall4;
-//Serial portLED_Wall5;
+Serial portLED_Wall3; 
+Serial portLED_Wall4; 
+Serial portLED_Wall5; 
+
+// CapacitiveTouch port
+Serial portCapacitive;
+
 
 void setup() {
   size(1550, 700);
@@ -36,12 +40,16 @@ void setup() {
   // LED PORT
   //String portLEDName = Serial.list()[6]; // Nicole's computer 
  
-  portLED_Wall1 = new Serial(this, Serial.list()[10], 9600);  // Kevin's computer
-  portLED_Wall2 = new Serial(this, Serial.list()[11], 9600);  // Kevin's computer
-  //portLED_Wall3 = new Serial(this, Serial.list()[12], 9600);  // Kevin's computer
-  //portLED_Wall4 = new Serial(this, Serial.list()[13], 9600);  // Kevin's computer
-  //portLED_Wall5 = new Serial(this, Serial.list()[14], 9600);  // Kevin's computer
+  portLED_Wall1 = new Serial(this, Serial.list()[11], 9600);  // Kevin's computer
+  portLED_Wall2 = new Serial(this, Serial.list()[12], 9600);  // Kevin's computer
+  portLED_Wall3 = new Serial(this, Serial.list()[13], 9600);  // Kevin's computer
+  portLED_Wall4 = new Serial(this, Serial.list()[14], 9600);  // Kevin's computer
+  portLED_Wall5 = new Serial(this, Serial.list()[15], 9600);  // Kevin's computer
 
+  // CapacitiveTouch port
+  portCapacitive = new Serial(this, Serial.list()[10], 9600);
+  
+  
   setupGUI();
 
   int portId = 0;
@@ -68,6 +76,7 @@ void draw() {
     if (!playEnabled) {
       Update();
       sendToLED();
+      capacitiveTouchEvent();
     }
   }
   

@@ -37,30 +37,32 @@ void sendToLED() {
       println("sent to LEDs: "+ sendStr);
       sendToLEDs_Wall2 = false;
     }
-    // 
-    // if (sendToLEDs_Wall3) { // Wall 3
-    //  // myPort.write(inVelocity);
-    //  String sendStr = inPitch+"";
-    //  portLED_Wall3.write(sendStr);
+     
+     if (sendToLEDs_Wall3) { // Wall 3
+      // myPort.write(inVelocity);
+      String sendStr = inPitch+"";
+      portLED_Wall3.write(sendStr);
 
-    //  println("sent to LEDs: "+ sendStr);
-    //  sendToLEDs_Wall3 = false;
-    //} 
-  //   if (sendToLEDs_Wall4) { // Wall 4
-    //  // myPort.write(inVelocity);
-    //  String sendStr = inPitch+"";
-    //  portLED_Wall4.write(sendStr);
+      println("sent to LEDs: "+ sendStr);
+      sendToLEDs_Wall3 = false;
+    } 
+     if (sendToLEDs_Wall4) { // Wall 4
+      // myPort.write(inVelocity);
+      String sendStr = inPitch+"";
+      portLED_Wall4.write(sendStr);
 
-    //  println("sent to LEDs: "+ sendStr);
-    //  sendToLEDs_Wall4 = false;
-    //}  if (sendToLEDs_Wall5) { // Wall 5
-    //  // myPort.write(inVelocity);
-    //  String sendStr = inPitch+"";
-    //  portLED_Wall5.write(sendStr);
+      println("sent to LEDs: "+ sendStr);
+      sendToLEDs_Wall4 = false;
+    }  
+    
+    if (sendToLEDs_Wall5) { // Wall 5
+      // myPort.write(inVelocity);
+      String sendStr = inPitch+"";
+      portLED_Wall5.write(sendStr);
 
-    //  println("sent to LEDs: "+ sendStr);
-    //  sendToLEDs_Wall5 = false;
-    //}
+      println("sent to LEDs: "+ sendStr);
+      sendToLEDs_Wall5 = false;
+    }
 
     //if (sendToMotors) {
     //  String sendStr =  inPitch+"";
