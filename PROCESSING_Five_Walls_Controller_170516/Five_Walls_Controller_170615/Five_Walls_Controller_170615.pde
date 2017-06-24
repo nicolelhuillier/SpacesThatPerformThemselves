@@ -34,20 +34,28 @@ void setup() {
   
   ///
   MidiBus.list(); // List all available Midi devices on STDOUT. This will show each device's index and name.    
-  //myBus = new MidiBus(this, 0, 1); // Nicole's computer - Create a new MidiBus with no input device and the default Java Sound Synthesizer as the output device.
-  myBus = new MidiBus(this, 1, 2); // Kevin's computer - Create a new MidiBus with no input device and the default Java Sound Synthesizer as the output device.
+  
+  myBus = new MidiBus(this, 0, 1); // Nicole's computer - Create a new MidiBus with no input device and the default Java Sound Synthesizer as the output device.
+  //myBus = new MidiBus(this, 1, 2); // Kevin's computer - Create a new MidiBus with no input device and the default Java Sound Synthesizer as the output device.
+
 
   // LED PORT
   //String portLEDName = Serial.list()[6]; // Nicole's computer 
  
-  portLED_Wall1 = new Serial(this, Serial.list()[10], 9600);  // Kevin's computer
-  portLED_Wall2 = new Serial(this, Serial.list()[11], 9600);  // Kevin's computer
-  portLED_Wall3 = new Serial(this, Serial.list()[12], 9600);  // Kevin's computer
-  portLED_Wall4 = new Serial(this, Serial.list()[13], 9600);  // Kevin's computer
-  portLED_Wall5 = new Serial(this, Serial.list()[14], 9600);  // Kevin's computer
+  //portLED_Wall1 = new Serial(this, Serial.list()[10], 9600);  // Kevin's computer
+  //portLED_Wall2 = new Serial(this, Serial.list()[11], 9600);  // Kevin's computer
+  //portLED_Wall3 = new Serial(this, Serial.list()[12], 9600);  // Kevin's computer
+  //portLED_Wall4 = new Serial(this, Serial.list()[13], 9600);  // Kevin's computer
+  //portLED_Wall5 = new Serial(this, Serial.list()[14], 9600);  // Kevin's computer
+  
+  portLED_Wall1 = new Serial(this, Serial.list()[7], 9600);  // Nicole's computer
+  portLED_Wall2 = new Serial(this, Serial.list()[8], 9600);  // Nicole's computer
+  portLED_Wall3 = new Serial(this, Serial.list()[9], 9600);  // Nicole's computer
+  portLED_Wall4 = new Serial(this, Serial.list()[10], 9600);  // Nicole's computer
+  portLED_Wall5 = new Serial(this, Serial.list()[11], 9600);  // Nicole's computer
 
   // CapacitiveTouch port
-  portCapacitive = new Serial(this, Serial.list()[9], 9600);
+  portCapacitive = new Serial(this, Serial.list()[6], 9600); // Nicole's computer
   
   
   setupGUI();
