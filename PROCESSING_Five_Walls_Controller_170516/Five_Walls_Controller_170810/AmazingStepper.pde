@@ -121,11 +121,5 @@ static class AmazingStepper {
     sendToPort("I0\n"+"D"+2+"\n","from 'highAll'");
     sendToPort("I0\n"+"D"+75+"\n","from 'highAll'");
   }
-  
-      static void flatwallCentral() {
-    sendToPort("I0\n"+"D"+1+"\n","from 'highAll'");
-    sendToPort("I0\n"+"D"+30+"\n","from 'highAll'");
-    sendToPort("I0\n"+"D"+2+"\n","from 'highAll'");
-    sendToPort("I0\n"+"D"+75+"\n","from 'highAll'");
-  }
+
 }

@@ -10,14 +10,14 @@ void noteOn(int channel, int pitch, int velocity) {
   println("Velocity:"+velocity);
 
   if (pitch == 80) {
-    AmazingStepper.highAll(); //250
+    AmazingStepper.highAll(); //all to 250
   }
   
   if (pitch == 81) {
-    AmazingStepper.lowAll(); //0
+    AmazingStepper.lowAll(); //all to 0
   }
   
-  if (pitch == 82) {
+  if (pitch == 82) { 
     AmazingStepper.sendMovement(17,127,250); // port, speed, pos
     AmazingStepper.sendMovement(33,127,250); // port, speed, pos
     AmazingStepper.sendMovement(49,127,250); // port, speed, pos
@@ -26,7 +26,7 @@ void noteOn(int channel, int pitch, int velocity) {
   }
   
   if(pitch == 83) {
-  AmazingStepper.flatwallAll();
+  AmazingStepper.flatwallAll(); //all to center (speed 30, pos 75)
 }
 
   if(pitch == 84) {

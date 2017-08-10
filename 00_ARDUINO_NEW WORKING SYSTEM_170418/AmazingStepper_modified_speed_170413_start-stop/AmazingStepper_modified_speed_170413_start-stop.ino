@@ -1,3 +1,9 @@
+//board Attiny 84
+//Arduino as ISP
+//Crystal: clock external 16
+
+
+
 #include <avr/io.h>
 #include <avr/interrupt.h>
 
@@ -77,7 +83,7 @@ void setup() {
   digitalWrite(smDirectionPin, DIRECTION_DOWN);
   lastDirection = DIRECTION_DOWN;
 
-  setupUSI_I2C(0x38);
+  setupUSI_I2C(0x27); //put the address "name/number" of the tiny
 
   seekHome();
 }
