@@ -121,5 +121,11 @@ static class AmazingStepper {
     sendToPort("I0\n"+"D"+2+"\n","from 'highAll'");
     sendToPort("I0\n"+"D"+75+"\n","from 'highAll'");
   }
-
+  
+  static void sendAll(int position, int speed) {
+    sendToPort("I0\n"+"D"+1+"\n","from 'sendAll'"); // speed
+    sendToPort("I0\n"+"D"+speed+"\n","from 'sendAll'"); // speed value
+    sendToPort("I0\n"+"D"+2+"\n","from 'sendAll'"); // position
+    sendToPort("I0\n"+"D"+position+"\n","from 'sendAll'"); // position value
+  }
 }
